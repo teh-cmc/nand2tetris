@@ -9,10 +9,23 @@
  *       0 otherwise
  */
 
+/**
+ * A | B || And | Or | Xor | Nand | Nor
+ * 0 | 0 ||   0 |  0 |   0 |    1 |   1
+ * 0 | 1 ||   0 |  1 |   1 |    1 |   0
+ * 1 | 0 ||   0 |  1 |   1 |    1 |   0
+ * 1 | 1 ||   1 |  1 |   0 |    0 |   0
+ *
+ * A || Not
+ * 0 || 1
+ * 1 || 0
+ */
+
 CHIP And {
     IN a, b;
     OUT out;
 
     PARTS:
-    // Put your code here:
+    Nand(a=a, b=b, out=c);
+    Not(in=c, out=out);
 }
