@@ -8,10 +8,26 @@
  * out = not (a == b)
  */
 
+/**
+ * A | B || And | Or | Xor | Nand | Nor
+ * 0 | 0 ||   0 |  0 |   0 |    1 |   1
+ * 0 | 1 ||   0 |  1 |   1 |    1 |   0
+ * 1 | 0 ||   0 |  1 |   1 |    1 |   0
+ * 1 | 1 ||   1 |  1 |   0 |    0 |   0
+ *
+ * A || Not
+ * 0 || 1
+ * 1 || 0
+ */
+
 CHIP Xor {
     IN a, b;
     OUT out;
 
     PARTS:
-    // Put your code here:
+    Not(in=a, out=c);
+    Not(in=b, out=d);
+    And(a=a, b=d, out=e);
+    And(a=c, b=b, out=f);
+    Or(a=e, b=f, out=out);
 }
