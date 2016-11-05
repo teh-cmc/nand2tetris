@@ -9,10 +9,25 @@
  *       0 otherwise
  */
 
+/**
+ * A | B || And | Or | Xor | Nand | Nor
+ * 0 | 0 ||   0 |  0 |   0 |    1 |   1
+ * 0 | 1 ||   0 |  1 |   1 |    1 |   0
+ * 1 | 0 ||   0 |  1 |   1 |    1 |   0
+ * 1 | 1 ||   1 |  1 |   0 |    0 |   0
+ *
+ * A || Not
+ * 0 || 1
+ * 1 || 0
+ */
+
 CHIP Or {
     IN a, b;
     OUT out;
 
     PARTS:
-    // Put your code here:
+    Not(in=a, out=c);
+    Not(in=b, out=d);
+    And(a=c, b=d, out=e);
+    Not(in=e, out=out);
 }
