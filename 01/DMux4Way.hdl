@@ -11,10 +11,28 @@
  *                {0, 0, 0, in} if sel == 11
  */
 
+/**
+ * A | B || And | Or | Xor | Nand | Nor
+ * 0 | 0 ||   0 |  0 |   0 |    1 |   1
+ * 0 | 1 ||   0 |  1 |   1 |    1 |   0
+ * 1 | 0 ||   0 |  1 |   1 |    1 |   0
+ * 1 | 1 ||   1 |  1 |   0 |    0 |   0
+ *
+ * A || Not
+ * 0 || 1
+ * 1 || 0
+ */
+
 CHIP DMux4Way {
     IN in, sel[2];
     OUT a, b, c, d;
 
     PARTS:
-    // Put your code here:
+    DMux(in=in, sel=sel[0], a=ax, b=bx);
+    DMux(in=in, sel=sel[0], a=cx, b=dx);
+    Not(in=sel[1], out=les);
+    And(a=ax, b=les, out=a);
+    And(a=bx, b=les, out=b);
+    And(a=cx, b=sel[1], out=c);
+    And(a=dx, b=sel[1], out=d);
 }
