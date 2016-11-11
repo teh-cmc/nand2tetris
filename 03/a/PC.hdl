@@ -12,9 +12,24 @@
  */
 
 CHIP PC {
-    IN in[16],load,inc,reset;
+    IN in[16], load, inc, reset;
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+
+    // increment t-1 output
+    Inc16(in=outx, out=x);
+    Mux16(a=outx, b=x, sel=inc, out=y);
+
+    // load t+0 input, discard t-1 output
+    Mux16(a=y, b=in, sel=load, out=z);
+
+    // reset content
+    Mux16(a=z, b=false, sel=reset, out=zz);
+
+    // any control bit should trigger a load
+    Or(a=load, b=inc, out=loadx);
+    Or(a=loadx, b=reset, out=loady);
+
+    Register(in=zz, load=loady, out=out, out=outx);
 }
